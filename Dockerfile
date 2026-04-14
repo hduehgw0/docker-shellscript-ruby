@@ -1,7 +1,7 @@
-FROM python:3.9-slim
+FROM ruby:3.2-slim
 
 WORKDIR /app
 
-COPY main.py judge.sh input.txt output.txt ./
+COPY main.rb judge.sh input.txt output.txt ./
 
 CMD ["bash", "judge.sh"]
