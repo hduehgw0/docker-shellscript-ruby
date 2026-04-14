@@ -2,12 +2,12 @@
 
 INPUT="input.txt"
 EXPECTED="output.txt"
-PROGRAM="main.py"
+PROGRAM="main.rb"
 ACTUAL="actual.txt"
 
 trap "rm -f $ACTUAL" EXIT
 
-python3 "$PROGRAM" < "$INPUT" > "$ACTUAL" 2> /dev/null
+ruby "$PROGRAM" < "$INPUT" > "$ACTUAL" 2> /dev/null
 
 # 正常終了 -> 0  異常終了 -> 0以外
 PY_STATUS=$?
