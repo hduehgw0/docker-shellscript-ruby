@@ -4,4 +4,6 @@ WORKDIR /app
 
 COPY main.rb judge.sh input.txt output.txt ./
 
-CMD ["bash", "judge.sh"]
+RUN chmod +x judge.sh
+
+CMD ["./judge.sh"]
