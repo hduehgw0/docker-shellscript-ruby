@@ -23,10 +23,13 @@ docker build -t algo-judge-ruby .
 
 ### 2. コンテナの実行（ジャッジの開始）
 ビルドが完了したら、以下のコマンドでコンテナを起動します。
-実行が終わると同時にコンテナが自動削除されるよう --rm オプションを付与しています。
+テストデータをコンテナに直接読み込ませるため、`-v` オプション（ボリュームマウント）を使用しています。
 
 ```bash
-docker run --rm algo-judge-ruby
+docker run --rm \
+  -v $(pwd)/input.txt:/app/input.txt \
+  -v $(pwd)/output.txt:/app/output.txt \
+  algo-judge-ruby
 ```
 
 ### 3. 判定結果について
@@ -41,4 +44,4 @@ docker run --rm algo-judge-ruby
 
 ### 4. テストケースの変更方法
 
-別のテストを行いたい場合は、ローカルの input.txt と output.txt の中身を書き換えて保存し、再度 docker build を実行してから docker run を行ってください。
+別のテストを行いたい場合は、ローカルの input.txt と output.txt の中身を書き換えて保存し、再度docker run を行ってください。
