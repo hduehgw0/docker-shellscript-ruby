@@ -10,9 +10,9 @@ trap "rm -f $ACTUAL" EXIT
 ruby "$PROGRAM" < "$INPUT" > "$ACTUAL" 2> /dev/null
 
 # 正常終了 -> 0  異常終了 -> 0以外
-PY_STATUS=$?
+RB_STATUS=$?
 
-if [ $PY_STATUS -ne 0 ]; then
+if [ $RB_STATUS -ne 0 ]; then
     echo "RE"
     exit 1
 fi
