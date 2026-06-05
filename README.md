@@ -1,12 +1,12 @@
-# Docker ShellScript
+# Docker ShellScript　Ruby
 Dockerコンテナ上で動作する、超簡易版の自動採点（ジャッジ）システムです。
-シェルスクリプトを用いて Python プログラムを実行し、標準入力から与えられたデータに対する処理結果が、期待される出力と一致するかを判定します。
+シェルスクリプトを用いて Ruby プログラムを実行し、標準入力から与えられたデータに対する処理結果が、期待される出力と一致するかを判定します。
 
 ## ファイル構成
 
-- `Dockerfile` : 実行環境（python:3.9-slim）を構築するための設計図
+- `Dockerfile` : 実行環境（ruby:3.2-slim）を構築するための設計図
 - `judge.sh` : メインの判定ロジックを担うシェルスクリプト
-- `main.py` : テスト対象の Python プログラム
+- `main.rb` : テスト対象の Ruby プログラム
 - `input.txt` : プログラムに流し込む標準入力データ
 - `output.txt` : 期待される正解の出力データ
 
@@ -18,15 +18,18 @@ Dockerコンテナ上で動作する、超簡易版の自動採点（ジャッ�
 プロジェクトのルートディレクトリ（このREADMEがある階層）で、以下のコマンドを実行してイメージを作成します。
 
 ```bash
-docker build -t algo-judge .
+docker build -t algo-judge-ruby .
 ```
 
 ### 2. コンテナの実行（ジャッジの開始）
 ビルドが完了したら、以下のコマンドでコンテナを起動します。
-実行が終わると同時にコンテナが自動削除されるよう --rm オプションを付与しています。
+テストデータをコンテナに直接読み込ませるため、`-v` オプション（ボリュームマウント）を使用しています。
 
 ```bash
-docker run --rm algo-judge
+docker run --rm \
+  -v $(pwd)/input.txt:/app/input.txt \
+  -v $(pwd)/output.txt:/app/output.txt \
+  algo-judge-ruby
 ```
 
 ### 3. 判定結果について
@@ -41,4 +44,4 @@ docker run --rm algo-judge
 
 ### 4. テストケースの変更方法
 
-別のテストを行いたい場合は、ローカルの input.txt と output.txt の中身を書き換えて保存し、再度 docker build を実行してから docker run を行ってください。
+別のテストを行いたい場合は、ローカルの input.txt と output.txt の中身を書き換えて保存し、再度docker run を行ってください。
